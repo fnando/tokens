@@ -4,7 +4,7 @@ has_tokens
 Instalation
 -----------
 
-1) Install the plugin with `script/plugin install http://svn.simplesideias.com.br/general/rails/plugins/has_tokens`
+1) Install the plugin with `script/plugin install git://github.com/fnando/has_tokens.git`
 2) Generate a migration with `script/generate migration create_tokens` and add the following code:
 
 class CreateTokens < ActiveRecord::Migration
@@ -28,7 +28,6 @@ class CreateTokens < ActiveRecord::Migration
     drop_table :tokens
   end
 end
-
 
 3) Run the migrations with `rake db:migrate`
 
@@ -57,6 +56,10 @@ user.add_token(:activate)
 # uses custom size (up to 32)
 user.add_token(:activate, :size => 20)
 
+# create token with arbitrary data
+data = {:action => 'do something'}
+user.add_token(:activate, :data => data.to_json)
+
 # find token by name
 user.find_token_by_name(:reset_account)
 
@@ -77,5 +80,17 @@ User.generate_token
 
 # remove a token by its name
 user.remove_token(:activate)
+
+# find user by token
+User.find_by_token(:activate, 'ea2f14aeac40')
+
+# find user by valid token (same name, same hash, not expired)
+User.find_by_valid_token(:activate, 'ea2f14aeac40')
+
+# find a token using class scope
+User.find_token(:activate, 'ea2f14aeac40')
+
+# Token hash
+token.to_s #=> ea2f14aeac40
 
 Copyright (c) 2008 Nando Vieira, released under the MIT license

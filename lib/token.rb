@@ -5,9 +5,12 @@ class Token < ActiveRecord::Base
     token
   end
   
+  def to_s
+    hash
+  end
+  
   def expired?
-    return true if expires_at && expires_at < Time.now
-    return false
+    expires_at && expires_at < Time.now
   end
   
   def self.delete_expired

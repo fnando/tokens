@@ -9,11 +9,11 @@ module SimplesIdeias
       
       module ClassMethods
         def has_tokens
-          write_inheritable_attribute(:tokenize_me_options, {
+          write_inheritable_attribute(:has_tokens_options, {
             :token_type => ActiveRecord::Base.send(:class_name_of_active_record_descendant, self).to_s
           })
           
-          class_inheritable_reader :tokenize_me_options
+          class_inheritable_reader :has_tokens_options
           
           has_many :tokens, :as => :tokenizable, :dependent => :destroy
           include SimplesIdeias::Acts::Tokens::InstanceMethods
@@ -30,33 +30,50 @@ module SimplesIdeias
           token
         end
         
-        def find_by_token(name, code)
-          token = Token.find(:first, :conditions => {
-            :tokenizable_type => tokenize_me_options[:token_type],
-            :name => name.to_s,
-            :token => code
-          })
+        # Find a token
+        # User.find_token(:activation, 'abcdefg')
+        # User.find_token(:name => activation, :token => 'abcdefg')
+        # User.find_token(:name => activation, :token => 'abcdefg', :tokenizable_id => 1)
+        def find_token(*args)
+          unless (options = args.first).is_a?(Hash)
+            options = {:name => args.first, :token => args.last.to_s}
+          end
           
-          return nil unless token
-          
-          find(:first, :conditions => {:id => token.tokenizable_id})
+          options[:name] = options[:name].to_s
+          options.merge!({:tokenizable_type => has_tokens_options[:token_type]})
+          Token.find(:first, :conditions => options)
+        end
+        
+        # Find object by token
+        # User.find_by_token(:activation, 'abcdefg')
+        def find_by_token(name, token)
+          t = find_token(:name => name.to_s, :token => token)
+          return nil unless t
+          t.tokenizable
+        end
+        
+        # Find object by valid token (same name, same hash, not expired)
+        # User.find_by_valid_token(:activation, 'abcdefg')
+        def find_by_valid_token(name, token)
+          t = find_token(:name => name.to_s, :token => token)
+          return nil unless t && !t.expired? && t.hash == token
+          t.tokenizable
         end
       end
       
       module InstanceMethods
+        # Object has a valid token (same name, same hash, not expired)
+        # @user.valid_token?(:activation, 'abcdefg')
         def valid_token?(name, token)
           t = find_token_by_name(name)
-          return false unless t
-          return false if t.expires_at < Time.now
-          return false unless t.token == token
-          return true
+          !!(t && !t.expired? && t.hash == token)
         end
         
         def remove_token(name)
           Token.delete_all([
             "tokenizable_id = ? AND tokenizable_type = ? AND name = ?", 
             self.id, 
-            self.class.tokenize_me_options[:token_type], 
+            self.class.has_tokens_options[:token_type], 
             name.to_s
           ])
         end
@@ -84,8 +101,10 @@ module SimplesIdeias
           self.tokens.find_by_name(name.to_s)
         end
         
-        def find_token(token)
-          self.tokens.find(:first, :conditions => {:token => token.to_s})
+        # Find a token
+        # @user.find_token(:activation, 'abcdefg')
+        def find_token(name, token)
+          self.class.find_token(:tokenizable_id => self.id, :name => name.to_s, :token => token)
         end
       end
     end

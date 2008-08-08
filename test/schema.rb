@@ -3,6 +3,10 @@ ActiveRecord::Schema.define(:version => 0) do
     t.string :name
   end
   
+  create_table :posts do |t|
+    t.string :title
+  end
+  
   create_table :tokens do |t|
     t.integer :tokenizable_id, :null => false
     t.string :tokenizable_type, :name, :null => false

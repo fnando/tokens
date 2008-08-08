@@ -1,18 +1,23 @@
 require "spec_helper"
 
 # unset models used for testing purposes
-Object.unset_class('User')
+Object.unset_class('User', 'Post')
 
 class User < ActiveRecord::Base
   has_tokens
 end
 
+class Post < ActiveRecord::Base
+  has_tokens
+end
+
 describe "has_tokens" do
-  fixtures :users
+  fixtures :users, :posts
   
   before(:each) do
     @user = users(:homer)
     @another_user = users(:bart)
+    @post = posts(:how_to_make_donuts)
     @expire = 3.days.from_now
   end
   
@@ -39,12 +44,12 @@ describe "has_tokens" do
     end
     
     it "should find token by its name" do
-      @user.add_token(:uid)
-      @user.find_token_by_name(:uid).should be_an_instance_of(Token)
+      token = @user.add_token(:uid)
+      @user.find_token_by_name(:uid).should == token
     end
     
     it "should be nil when no token is found" do
-      @user.find_token('abcdef').should be_nil
+      @user.find_token(:uid, 'abcdef').should be_nil
       @user.find_token_by_name(:uid).should be_nil
     end
     
@@ -57,9 +62,9 @@ describe "has_tokens" do
       @user.valid_token?(:uid, 'invalid').should be_false
     end
     
-    it "should find token by its hash" do
+    it "should find token by its name and hash" do
       token = @user.add_token(:uid)
-      @user.find_token(token.hash).should be_an_instance_of(Token)
+      @user.find_token(:uid, token.hash).should == token
     end
     
     it "should not be expired when have no expiration date" do
@@ -124,5 +129,38 @@ describe "has_tokens" do
   it "should alias token method" do
     token = @user.add_token(:uid)
     token.hash.should == token.token
+  end
+  
+  it "should find user by token" do
+    token = @user.add_token(:uid)
+    User.find_by_token(:uid, token.hash).should == @user
+  end
+  
+  it "should return user by its valid token without expiration time" do
+    token = @user.add_token(:uid)
+    User.find_by_valid_token(:uid, token.hash).should == @user
+  end
+  
+  it "should return user by its valid token with expiration time" do
+    token = @user.add_token(:uid, :expires_at => @expire)
+    User.find_by_valid_token(:uid, token.hash).should == @user
+  end
+  
+  it "should find token using class method with one argument (hash only)" do
+    token = @user.add_token(:uid)
+    User.find_token(:name => :uid, :token => token.hash).should == token
+  end
+  
+  it "should not conflict with other models" do
+    user_token = @user.add_token(:uid)
+    post_token = @post.add_token(:uid)
+    
+    User.find_token(post_token.to_s).should == nil
+    User.find_token(:name => :uid)
+  end
+  
+  it "to_s should return hash" do
+    token = @user.add_token(:uid)
+    token.to_s.should == token.hash
   end
 end

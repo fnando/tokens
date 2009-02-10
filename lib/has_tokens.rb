@@ -24,7 +24,7 @@ module SimplesIdeias
           
           begin
             seed = Digest::SHA1.hexdigest(seed)
-            token = CGI::Session.generate_unique_id(seed).first(size)
+            token = ActiveSupport::SecureRandom.hex(seed).first(size)
           end while !validity.call(token)
           
           token

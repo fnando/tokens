@@ -24,7 +24,7 @@ module SimplesIdeias
           
           begin
             seed = Digest::SHA1.hexdigest(seed)
-            token = ActiveSupport::SecureRandom.hex(seed).first(size)
+            token = Digest::SHA1.hexdigest(seed)[0,size] #ActiveSupport::SecureRandom.hex(seed).first(size)
           end while !validity.call(token)
           
           token

@@ -1,8 +1,5 @@
 require "spec_helper"
 
-# unset models used for testing purposes
-Object.unset_class('User', 'Post')
-
 class User < ActiveRecord::Base
   has_tokens
 end
@@ -12,12 +9,13 @@ class Post < ActiveRecord::Base
 end
 
 describe "has_tokens" do
-  fixtures :users, :posts
-  
   before(:each) do
-    @user = users(:homer)
-    @another_user = users(:bart)
-    @post = posts(:how_to_make_donuts)
+    User.delete_all
+    Post.delete_all
+    
+    @user = User.create(:name => "Homer")
+    @another_user = User.create(:name => "Bart")
+    @post = Post.create(:title => "How to make donuts")
     @expire = 3.days.from_now
   end
   

@@ -9,7 +9,7 @@ begin
     gem.email = "fnando.vieira@gmail.com"
     gem.homepage = "http://github.com/fnando/has_tokens"
     gem.authors = ["Nando Vieira"]
-    gem.version = SimplesIdeias::Tokens::Version::STRING + ".beta.1"
+    gem.version = SimplesIdeias::Tokens::Version::STRING + ".beta.2"
     gem.summary = "Generate named tokens on your ActiveRecord models."
     gem.files =  FileList["README.rdoc", "init.rb", "{lib,spec,source}/**/*", "Rakefile"]
   end

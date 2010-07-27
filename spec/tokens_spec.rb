@@ -79,7 +79,7 @@ describe "has_tokens" do
 
     it "should remove token" do
       @user.add_token(:uid)
-      @user.remove_token(:uid).should > 0
+      @user.remove_token(:uid).should be_true
     end
 
     it "should not remove other users tokens" do

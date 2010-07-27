@@ -35,13 +35,13 @@ module Tokens
 
     # Find a token
     #
-    #   User.find_token(:activation, 'abcdefg')
-    #   User.find_token(:name => activation, :token => 'abcdefg')
-    #   User.find_token(:name => activation, :token => 'abcdefg', :tokenizable_id => 1)
+    #   User.find_token(:activation, "abcdefg")
+    #   User.find_token(:name => activation, :token => "abcdefg")
+    #   User.find_token(:name => activation, :token => "abcdefg", :tokenizable_id => 1)
     #
     def find_token(*args)
       if args.first.kind_of?(Hash)
-        args.first
+        options = args.first
       else
         options = {
           :name => args.first,
@@ -50,12 +50,12 @@ module Tokens
       end
 
       options.merge!(:name => options[:name].to_s, :tokenizable_type => self.name)
-      Token.where(options).include(:tokenizable).first
+      Token.where(options).includes(:tokenizable).first
     end
 
     # Find object by token.
     #
-    #   User.find_by_token(:activation, 'abcdefg')
+    #   User.find_by_token(:activation, "abcdefg")
     #
     def find_by_token(name, hash)
       token = find_token(:name => name.to_s, :token => hash)
@@ -65,19 +65,27 @@ module Tokens
 
     # Find object by valid token (same name, same hash, not expired).
     #
-    #   User.find_by_valid_token(:activation, 'abcdefg')
+    #   User.find_by_valid_token(:activation, "abcdefg")
     #
     def find_by_valid_token(name, hash)
       token = find_token(:name => name.to_s, :token => hash)
-      return nil if !token || t.expired?
-      t.tokenizable
+      return nil if !token || token.expired?
+      token.tokenizable
     end
   end
 
   module InstanceMethods
+    # Verify if given token is valid.
+    #
+    #   @user.valid_token?(:active, "abcdefg")
+    #
+    def valid_token?(name, hash)
+      self.tokens.where(:name => name.to_s, :token => hash.to_s).first != nil
+    end
+
     # Find a token.
     #
-    #   @user.find_token(:activation, 'abcdefg')
+    #   @user.find_token(:activation, "abcdefg")
     #
     def find_token(name, token)
       self.class.find_token(
@@ -121,7 +129,7 @@ module Tokens
         :expires_at => options[:expires_at],
         :data       => options[:data]
       }
-      p attrs
+
       self.tokens.create!(attrs)
     end
   end

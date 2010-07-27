@@ -1,0 +1,122 @@
+= Tokens
+
+== Usage
+
+=== Installation
+
+You can use I18n-JS as plugin and gem. Choose what's best for you!
+
+  script/plugin install git://github.com/fnando/has_tokens.git
+
+or
+
+  gem install tokens
+
+=== Setting up
+
+Create a migration file with <tt>script/generate migration create_tokens</tt> or <tt>rails generate migration tokens</tt>.
+
+  class CreateTokens < ActiveRecord::Migration
+    def self.up
+      create_table :tokens do |t|
+        t.integer :tokenizable_id, :null => false
+        t.string :tokenizable_type, :name, :null => false
+        t.string :token, :limit => 40, :null => false
+        t.text :data, :null => true
+        t.datetime :expires_at, :null => true
+        t.datetime :created_at
+      end
+
+      add_index :tokens, :tokenizable_type
+      add_index :tokens, :tokenizable_id
+      add_index :tokens, :token
+      add_index :tokens, :expires_at
+    end
+
+    def self.down
+      drop_table :tokens
+    end
+  end
+
+Run migrations with <tt>rake db:migrate</tt>. Add the method call
+<tt>has_tokens</tt> to your model and be happy!
+
+  class User < ActiveRecord::Base
+    has_tokens
+  end
+
+  # create a new token; remember that the object need to be saved before creating
+  # the token because it depends on the id
+  user = User.create(:login => "fnando")
+
+  # uses the default expires_at (2 days from now)
+  user.add_token(:activate)
+
+  # uses custom expires_at
+  user.add_token(:activate, :expires_at => 10.days.from_now)
+
+  # uses the default size (12 characters)
+  user.add_token(:activate)
+
+  # uses custom size (up to 32)
+  user.add_token(:activate, :size => 20)
+
+  # create token with arbitrary data
+  data = {:action => 'do something'}
+  user.add_token(:activate, :data => data.to_json)
+
+  # find token by name
+  user.find_token_by_name(:reset_account)
+
+  # find token by hash
+  user.find_token("ea2f14aeac40")
+
+  # check if a token has expired
+  user.tokens.first.expired?
+
+  # find user by token
+  User.find_by_token(:activate, "ea2f14aeac40")
+
+  # remove all expired tokens except those with NULL values
+  Token.clean
+
+  # generate a token as string, without saving it
+  User.generate_token
+
+  # remove a token by its name
+  user.remove_token(:activate)
+
+  # find user by token
+  User.find_by_token(:activate, 'ea2f14aeac40')
+
+  # find user by valid token (same name, same hash, not expired)
+  User.find_by_valid_token(:activate, 'ea2f14aeac40')
+
+  # find a token using class scope
+  User.find_token(:activate, 'ea2f14aeac40')
+
+  # Token hash
+  token.to_s #=> ea2f14aeac40
+
+== License
+
+Copyright (c) 2008 Nando Vieira, released under the MIT license
+
+Permission is hereby granted, free of charge, to any person obtaining
+a copy of this software and associated documentation files (the
+"Software"), to deal in the Software without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Software, and to
+permit persons to whom the Software is furnished to do so, subject to
+the following conditions:
+
+The above copyright notice and this permission notice shall be
+included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.

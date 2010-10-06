@@ -7,9 +7,9 @@ begin
   JEWEL = Jeweler::Tasks.new do |gem|
     gem.name = "tokens"
     gem.email = "fnando.vieira@gmail.com"
-    gem.homepage = "http://github.com/fnando/has_tokens"
+    gem.homepage = "http://github.com/fnando/tokens"
     gem.authors = ["Nando Vieira"]
-    gem.version = SimplesIdeias::Tokens::Version::STRING + ".beta.3"
+    gem.version = SimplesIdeias::Tokens::Version::STRING
     gem.summary = "Generate named tokens on your ActiveRecord models."
     gem.files =  FileList["README.rdoc", "init.rb", "{lib,spec,source}/**/*", "Rakefile"]
   end

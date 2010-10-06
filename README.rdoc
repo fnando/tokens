@@ -4,12 +4,6 @@
 
 === Installation
 
-You can use I18n-JS as plugin and gem. Choose what's best for you!
-
-  script/plugin install git://github.com/fnando/tokens.git
-
-or
-
   gem install tokens
 
 === Setting up

@@ -10,13 +10,15 @@ module Tokens
     # Set up model for using tokens.
     #
     #   class User < ActiveRecord::Base
-    #     has_tokens
+    #     tokenizable
     #   end
     #
-    def has_tokens
+    def tokenizable
       has_many :tokens, :as => :tokenizable, :dependent => :destroy
       include InstanceMethods
     end
+
+    alias_method :has_tokens, :tokenizable
 
     # Generate token with specified length.
     #

@@ -1,14 +1,14 @@
 require "spec_helper"
 
 class User < ActiveRecord::Base
-  has_tokens
+  tokenizable
 end
 
 class Post < ActiveRecord::Base
-  has_tokens
+  tokenizable
 end
 
-describe "has_tokens" do
+describe Tokens do
   before do
     User.delete_all
     Post.delete_all

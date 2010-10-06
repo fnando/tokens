@@ -6,7 +6,7 @@
 
 You can use I18n-JS as plugin and gem. Choose what's best for you!
 
-  script/plugin install git://github.com/fnando/has_tokens.git
+  script/plugin install git://github.com/fnando/tokens.git
 
 or
 
@@ -39,10 +39,10 @@ Create a migration file with <tt>script/generate migration create_tokens</tt> or
   end
 
 Run migrations with <tt>rake db:migrate</tt>. Add the method call
-<tt>has_tokens</tt> to your model and be happy!
+<tt>tokens</tt> to your model and be happy!
 
   class User < ActiveRecord::Base
-    has_tokens
+    tokenizable
   end
 
   # create a new token; remember that the object need to be saved before creating

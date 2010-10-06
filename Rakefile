@@ -1,8 +1,8 @@
 require "rspec/core/rake_task"
-require "lib/tokens/version"
+require "./lib/tokens/version"
 
 begin
-  require 'jeweler'
+  require "jeweler"
 
   JEWEL = Jeweler::Tasks.new do |gem|
     gem.name = "tokens"

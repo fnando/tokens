@@ -1,5 +1,6 @@
 class Token < ActiveRecord::Base
   belongs_to :tokenizable, :polymorphic => true
+  serialize :data
 
   def hash
     token

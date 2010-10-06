@@ -15,14 +15,25 @@ Gem::Specification.new do |s|
     "README.rdoc"
   ]
   s.files = [
-    "README.rdoc",
+    "Gemfile",
+     "Gemfile.lock",
+     "README.rdoc",
      "Rakefile",
      "lib/tokens.rb",
+     "lib/tokens/active_record.rb",
+     "lib/tokens/generator.rb",
+     "lib/tokens/railtie.rb",
      "lib/tokens/token.rb",
      "lib/tokens/version.rb",
      "spec/schema.rb",
      "spec/spec_helper.rb",
-     "spec/tokens_spec.rb"
+     "spec/support/config/boot.rb",
+     "spec/support/config/database.yml",
+     "spec/support/log/test.log",
+     "spec/support/models.rb",
+     "spec/tokens_spec.rb",
+     "templates/tokens.rb",
+     "tokens.gemspec"
   ]
   s.homepage = %q{http://github.com/fnando/tokens}
   s.rdoc_options = ["--charset=UTF-8"]
@@ -32,6 +43,8 @@ Gem::Specification.new do |s|
   s.test_files = [
     "spec/schema.rb",
      "spec/spec_helper.rb",
+     "spec/support/config/boot.rb",
+     "spec/support/models.rb",
      "spec/tokens_spec.rb"
   ]
 

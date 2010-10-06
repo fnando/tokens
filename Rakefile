@@ -9,9 +9,9 @@ begin
     gem.email = "fnando.vieira@gmail.com"
     gem.homepage = "http://github.com/fnando/tokens"
     gem.authors = ["Nando Vieira"]
-    gem.version = SimplesIdeias::Tokens::Version::STRING
+    gem.version = Tokens::Version::STRING
     gem.summary = "Generate named tokens on your ActiveRecord models."
-    gem.files =  FileList["README.rdoc", "init.rb", "{lib,spec,source}/**/*", "Rakefile"]
+    gem.files =  FileList["{Rakefile,README.rdoc,Gemfile,Gemfile.lock,tokens.gemspec}", "{lib,spec,templates}/**/*"]
   end
 
   Jeweler::GemcutterTasks.new
@@ -20,5 +20,5 @@ rescue LoadError => e
 end
 
 RSpec::Core::RakeTask.new do |t|
-  t.ruby_opts = %[ -rubygems -Ilib -Ispec ]
+  t.ruby_opts = %[ -Ilib -Ispec ]
 end

@@ -1,11 +1,13 @@
-require "rspec"
-require "active_record"
+ENV["RAILS_ENV"] = "test"
 require "tokens"
+require File.dirname(__FILE__) + "/support/config/boot"
+require "rspec/rails"
 
-ActiveRecord::Base.establish_connection(:adapter => "sqlite3", :database => ":memory:")
+# Load database schema
+load File.dirname(__FILE__) + "/schema.rb"
 
-load("schema.rb")
+require "support/models"
 
-RSpec.configure do |c|
-  c.color_enabled = true
+RSpec.configure do |config|
+  config.mock_with :rspec
 end

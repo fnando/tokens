@@ -24,7 +24,8 @@ module Tokens
         validity = Proc.new {|token| Token.where(:token => token).first.nil?}
 
         begin
-          token = SecureRandom.hex(40)[0, size].to_i(16).to_s(16)
+          token = SecureRandom.hex(40)[0, size]
+          token = token.encode("UTF-8") if token.respond_to?(:encoding)
         end while validity[token] == false
 
         token

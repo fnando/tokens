@@ -24,8 +24,7 @@ module Tokens
         validity = Proc.new {|token| Token.where(:token => token).first.nil?}
 
         begin
-          seed = "--#{rand}--#{Time.now}--#{rand}--"
-          token = Digest::SHA1.hexdigest(seed)[0, size]
+          token = SecureRandom.hex(40)[0, size].to_i(16).to_s(16)
         end while validity[token] == false
 
         token

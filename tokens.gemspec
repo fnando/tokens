@@ -18,9 +18,8 @@ Gem::Specification.new do |s|
   s.require_paths = ["lib"]
 
   s.add_development_dependency "rails"        , "~> 3.1"
-  s.add_development_dependency "rake"         , "~> 0.8.7"
+  s.add_development_dependency "rake"         , "~> 0.9"
   s.add_development_dependency "rspec-rails"  , "~> 2.6"
-  s.add_development_dependency "sqlite3"      , "~> 1.3.3"
+  s.add_development_dependency "sqlite3"      , "~> 1.3.4"
   s.add_development_dependency "ruby-debug19"
-  s.add_development_dependency "mysql2"
 end

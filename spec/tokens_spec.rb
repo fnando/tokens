@@ -37,27 +37,27 @@ describe Tokens do
 
   it "should alias token method" do
     token = @user.add_token(:uid)
-    token.hash.should == token.token
+    token.to_s.should == token.token
   end
 
   it "should find user by token" do
     token = @user.add_token(:uid)
-    User.find_by_token(:uid, token.hash).should == @user
+    User.find_by_token(:uid, token.to_s).should == @user
   end
 
   it "should return user by its valid token without expiration time" do
     token = @user.add_token(:uid)
-    User.find_by_valid_token(:uid, token.hash).should == @user
+    User.find_by_valid_token(:uid, token.to_s).should == @user
   end
 
   it "should return user by its valid token with expiration time" do
     token = @user.add_token(:uid, :expires_at => @expire)
-    User.find_by_valid_token(:uid, token.hash).should == @user
+    User.find_by_valid_token(:uid, token.to_s).should == @user
   end
 
   it "should find token using class method with one argument (hash only)" do
     token = @user.add_token(:uid)
-    User.find_token(:name => :uid, :token => token.hash).should == token
+    User.find_token(:name => :uid, :token => token.to_s).should == token
   end
 
   it "should not conflict with other models" do
@@ -70,7 +70,7 @@ describe Tokens do
 
   it "to_s should return hash" do
     token = @user.add_token(:uid)
-    token.to_s.should == token.hash
+    token.to_s.should == token.to_s
   end
 
   describe Token do
@@ -98,7 +98,7 @@ describe Tokens do
     end
 
     it "should be created with custom size" do
-      @user.add_token(:uid, :size => 6).hash.size.should == 6
+      @user.add_token(:uid, :size => 6).to_s.size.should == 6
     end
 
     it "should find token by its name" do
@@ -113,7 +113,7 @@ describe Tokens do
 
     it "should be a valid token" do
       token = @user.add_token(:uid)
-      @user.valid_token?(:uid, token.hash).should be_true
+      @user.valid_token?(:uid, token.to_s).should be_true
     end
 
     it "should not be a valid token" do
@@ -122,7 +122,7 @@ describe Tokens do
 
     it "should find token by its name and hash" do
       token = @user.add_token(:uid)
-      @user.find_token(:uid, token.hash).should == token
+      @user.find_token(:uid, token.to_s).should == token
     end
 
     it "should not be expired when have no expiration date" do

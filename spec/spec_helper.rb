@@ -4,7 +4,11 @@ require File.dirname(__FILE__) + "/support/config/boot"
 require "rspec/rails"
 
 # Load database schema
-load File.dirname(__FILE__) + "/schema.rb"
+begin
+  load File.dirname(__FILE__) + "/schema.rb"
+rescue Exception => e
+  p e
+end
 
 require "support/models"
 

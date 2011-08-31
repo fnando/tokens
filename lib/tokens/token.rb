@@ -2,12 +2,8 @@ class Token < ActiveRecord::Base
   belongs_to :tokenizable, :polymorphic => true
   serialize :data
 
-  def hash
-    token
-  end
-
   def to_s
-    hash
+    token
   end
 
   def expired?

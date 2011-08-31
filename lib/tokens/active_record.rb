@@ -88,7 +88,8 @@ module Tokens
       def find_token(name, token)
         self.class.find_token(
           :tokenizable_id => self.id,
-          :name => name.to_s, :token => token
+          :name => name.to_s,
+          :token => token
         )
       end
 

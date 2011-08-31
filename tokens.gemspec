@@ -22,4 +22,5 @@ Gem::Specification.new do |s|
   s.add_development_dependency "rspec-rails"  , "~> 2.6"
   s.add_development_dependency "sqlite3"      , "~> 1.3.3"
   s.add_development_dependency "ruby-debug19"
+  s.add_development_dependency "mysql2"
 end

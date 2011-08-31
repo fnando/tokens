@@ -1,8 +1,8 @@
 module Tokens
   module Version
-    MAJOR = 0
-    MINOR = 2
-    PATCH = 1
+    MAJOR = 1
+    MINOR = 0
+    PATCH = 0
     STRING = "#{MAJOR}.#{MINOR}.#{PATCH}"
   end
 end

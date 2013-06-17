@@ -4,7 +4,6 @@ script: "bundle exec rake spec"
 rvm:
   - 2.0.0
   - 1.9.3
-  - jruby-19mode
 
 gemfile:
   - gemfiles/rails3.gemfile

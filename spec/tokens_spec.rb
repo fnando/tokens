@@ -87,15 +87,15 @@ describe Tokens do
       expect(@user.add_token(:uid, expires_at: @expire).expires_at).to eql(@expire)
     end
 
-    it "is created with additional data" do
-      expect(@user.add_token(:uid, data: "some value").data).to eql("some value")
-    end
-
     it "serializes data" do
       token = @user.add_token(:uid, data: {name: "John Doe"})
       token.reload
 
       expect(token.data).to include("name" => "John Doe")
+    end
+
+    it "returns empty hash as serialized data" do
+      expect(Token.new.data).to eql({})
     end
 
     it "is created with custom size" do

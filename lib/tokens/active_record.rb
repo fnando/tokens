@@ -18,7 +18,7 @@ module Tokens
       end
 
       def self.dump(data)
-        data ? JSON.dump(data) : {}
+        data ? JSON.dump(data) : nil
       end
     end
 

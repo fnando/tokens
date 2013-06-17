@@ -1,6 +1,6 @@
 class Token < ActiveRecord::Base
   belongs_to :tokenizable, polymorphic: true
-  serialize :data, JSON
+  serialize :data, Tokens::ActiveRecord::Serializer
 
   attr_readonly :tokenizable_id, :tokenizable_type
 

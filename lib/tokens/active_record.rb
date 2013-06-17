@@ -4,6 +4,24 @@ module Tokens
       base.class_eval { extend  ClassMethods }
     end
 
+    module Serializer
+      class << self
+        # Set the serializer adapter. Defaults to JSON.
+        attr_accessor :adapter
+      end
+
+      require "json"
+      self.adapter = ::JSON
+
+      def self.load(data)
+        data ? JSON.load(data) : {}
+      end
+
+      def self.dump(data)
+        data ? JSON.dump(data) : {}
+      end
+    end
+
     module ClassMethods
       # Set up model for using tokens.
       #

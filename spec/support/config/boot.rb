@@ -8,6 +8,7 @@ module Tokens
   class Application < Rails::Application
     config.root = File.dirname(__FILE__) + "/.."
     config.active_support.deprecation = :log
+    config.eager_load = true
   end
 end
 

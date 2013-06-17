@@ -1,8 +1,13 @@
 language: ruby
+
 rvm:
   - 2.0.0
   - 1.9.3
   - jruby-19mode
+
+gemfile:
+  - Gemfile
+  - gemfiles/rails4.gemfile
 
 notifications:
   email:

@@ -126,7 +126,7 @@ module Tokens
           name: name.to_s,
           token: self.class.generate_token(options[:size]),
           expires_at: options[:expires_at],
-          data: options[:data]
+          data: options.fetch(:data) || {}
         }
 
         self.tokens.create!(attrs)

@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    tokens (2.0.0)
+    tokens (2.0.1)
 
 GEM
   remote: http://rubygems.org/

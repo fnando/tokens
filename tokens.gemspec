@@ -19,7 +19,7 @@ Gem::Specification.new do |s|
 
   s.add_development_dependency "rails"
   s.add_development_dependency "rake"
-  s.add_development_dependency "rspec-rails", "~> 2.14.0.rc1"
+  s.add_development_dependency "rspec-rails"
   s.add_development_dependency "sqlite3"
   s.add_development_dependency "pry-meta"
 end

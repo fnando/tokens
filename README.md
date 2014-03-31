@@ -22,8 +22,8 @@ class User < ActiveRecord::Base
   tokenizable
 end
 
-# create a new user; remember that the object need to be saved before creating
-# the token because it depends on the id
+# create a new user; remember that the token requires an existing record
+# because it depends on its id
 user = User.create(username: "fnando")
 
 # create token that never expires

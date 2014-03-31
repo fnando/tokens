@@ -1,6 +1,6 @@
 # Tokens
 
-[![Build Status](https://travis-ci.org/pagseguro/rails.png)](https://travis-ci.org/pagseguro/ruby)
+[![Build Status](https://travis-ci.org/fnando/tokens.png)](https://travis-ci.org/fnando/tokens)
 
 ## Usage
 

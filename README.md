@@ -2,6 +2,7 @@
 
 [![Build Status](https://travis-ci.org/fnando/tokens.png)](https://travis-ci.org/fnando/tokens)
 [![Code Climate](https://codeclimate.com/github/fnando/tokens.png)](https://codeclimate.com/github/fnando/tokens)
+[![Gem Version](https://badge.fury.io/rb/tokens.png)](http://badge.fury.io/rb/tokens)
 
 ## Usage
 

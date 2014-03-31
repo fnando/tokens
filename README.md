@@ -1,6 +1,7 @@
 # Tokens
 
 [![Build Status](https://travis-ci.org/fnando/tokens.png)](https://travis-ci.org/fnando/tokens)
+[![Code Climate](https://codeclimate.com/github/fnando/tokens.png)](https://codeclimate.com/github/fnando/tokens)
 
 ## Usage
 

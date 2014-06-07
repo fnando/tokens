@@ -114,11 +114,11 @@ describe Tokens do
 
     it "is a valid token" do
       token = @user.add_token(:uid)
-      expect(@user.valid_token?(:uid, token.to_s)).to be_true
+      expect(@user.valid_token?(:uid, token.to_s)).to be_truthy
     end
 
     it "isn't a valid token" do
-      expect(@user.valid_token?(:uid, "invalid")).to be_false
+      expect(@user.valid_token?(:uid, "invalid")).to be_falsy
     end
 
     it "finds token by its name and hash" do
@@ -140,7 +140,7 @@ describe Tokens do
 
     it "removes token" do
       @user.add_token(:uid)
-      expect(@user.remove_token(:uid)).to be_true
+      expect(@user.remove_token(:uid)).to be_truthy
     end
 
     it "doesn't remove other users tokens" do
@@ -158,6 +158,25 @@ describe Tokens do
       @user.add_token(:uid)
 
       expect(@user.tokens.where(name: "uid").count).to eql(1)
+    end
+
+    it "returns valid token" do
+      token = @user.add_token(:uid)
+      expect(@user.find_valid_token(:uid, token.to_s)).to eql(token)
+    end
+
+    it "returns nothing for invalid token" do
+      token = @user.add_token(:uid)
+      expect(@user.find_valid_token(:uid, "invalid")).to be_nil
+    end
+
+    it "returns nothing for missing token" do
+      expect(@user.find_valid_token(:uid, "invalid")).to be_nil
+    end
+
+    it "returns nothing for expired token" do
+      token = @user.add_token(:uid, expires_at: 2.weeks.ago)
+      expect(@user.find_valid_token(:uid, "invalid")).to be_nil
     end
   end
 end

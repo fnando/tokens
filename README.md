@@ -46,6 +46,9 @@ user.add_token(:activate, data: {action: "do something"})
 # find token by name
 user.find_token_by_name(:reset_account)
 
+# find valid token per user context.
+user.find_valid_token(:reset_account, "ea2f14aeac40")
+
 # find token by hash
 user.find_token("ea2f14aeac40")
 

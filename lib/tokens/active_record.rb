@@ -116,6 +116,13 @@ module Tokens
         self.tokens.where(name: name.to_s).first
       end
 
+      # Return <tt>Token</tt> instance when token is valid.
+      def find_valid_token(name, token)
+        token = find_token(name, token)
+        return unless token
+        !token.expired? && token
+      end
+
       # Remove token.
       #
       #   @user.remove_token(:activate)

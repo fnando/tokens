@@ -40,6 +40,9 @@ user.add_token(:activate)
 # uses custom size (up to 122)
 user.add_token(:activate, size: 20)
 
+# uses custom token value
+user.add_token(:activate, token: 'abc123')
+
 # create token with arbitrary data.
 user.add_token(:activate, data: {action: "do something"})
 

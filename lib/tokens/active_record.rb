@@ -135,6 +135,7 @@ module Tokens
 
       # Add a new token.
       #
+      #   @user.add_token(:api_key, token: 'abc123')
       #   @user.add_token(:api_key, expires_at: nil)
       #   @user.add_token(:api_key, size: 20)
       #   @user.add_token(:api_key, data: {when: Time.now})
@@ -149,7 +150,7 @@ module Tokens
         remove_token(name)
         attrs = {
           name: name.to_s,
-          token: self.class.generate_token(options[:size]),
+          token: options[:token] || self.class.generate_token(options[:size]),
           expires_at: options[:expires_at],
           data: options.fetch(:data) || {}
         }

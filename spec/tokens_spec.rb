@@ -178,5 +178,10 @@ describe Tokens do
       token = @user.add_token(:uid, expires_at: 2.weeks.ago)
       expect(@user.find_valid_token(:uid, "invalid")).to be_nil
     end
+
+    it "creates token with provided value" do
+      token = @user.add_token(:uid, token: 'abc123')
+      expect(token.to_s).to eq("abc123")
+    end
   end
 end

@@ -1,11 +1,16 @@
+require "codeclimate-test-reporter"
+CodeClimate::TestReporter.start
+
 ENV["RAILS_ENV"] = "test"
 
 require "bundler/setup"
 require "rails"
 require "rails/railtie"
 require "action_controller/railtie"
-require "rspec/rails"
 require "tokens"
+
+require "minitest/utils"
+require "minitest/autorun"
 
 module Tokens
   class Application < Rails::Application
@@ -27,6 +32,12 @@ end
 
 require "support/models"
 
-RSpec.configure do |config|
-  config.mock_with :rspec
+module Minitest
+  class Test
+    setup do
+      User.delete_all
+      Post.delete_all
+      Token.delete_all
+    end
+  end
 end

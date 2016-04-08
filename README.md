@@ -1,8 +1,10 @@
 # Tokens
 
-[![Build Status](https://travis-ci.org/fnando/tokens.png)](https://travis-ci.org/fnando/tokens)
-[![Code Climate](https://codeclimate.com/github/fnando/tokens.png)](https://codeclimate.com/github/fnando/tokens)
-[![Gem Version](https://badge.fury.io/rb/tokens.png)](http://badge.fury.io/rb/tokens)
+[![Travis-CI](https://travis-ci.org/fnando/tokens.png)](https://travis-ci.org/fnando/tokens)
+[![Code Climate](https://codeclimate.com/github/fnando/tokens/badges/gpa.svg)](https://codeclimate.com/github/fnando/tokens)
+[![Test Coverage](https://codeclimate.com/github/fnando/tokens/badges/coverage.svg)](https://codeclimate.com/github/fnando/tokens/coverage)
+[![Gem](https://img.shields.io/gem/v/tokens.svg)](https://rubygems.org/gems/tokens)
+[![Gem](https://img.shields.io/gem/dt/tokens.svg)](https://rubygems.org/gems/tokens)
 
 ## Usage
 

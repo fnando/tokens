@@ -1,6 +1,4 @@
-# -*- encoding: utf-8 -*-
-$:.push File.expand_path("../lib", __FILE__)
-require "tokens/version"
+require "./lib/tokens/version"
 
 Gem::Specification.new do |s|
   s.name        = "tokens"
@@ -19,7 +17,9 @@ Gem::Specification.new do |s|
 
   s.add_development_dependency "rails"
   s.add_development_dependency "rake"
-  s.add_development_dependency "rspec-rails"
+  s.add_development_dependency "minitest-utils"
+  s.add_development_dependency "mocha"
   s.add_development_dependency "sqlite3"
   s.add_development_dependency "pry-meta"
+  s.add_development_dependency "codeclimate-test-reporter"
 end

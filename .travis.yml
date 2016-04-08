@@ -1,15 +1,15 @@
 language: ruby
-script: "bundle exec rake spec"
-
+sudo: false
+cache: bundler
 rvm:
-  - 2.1.1
-  - 2.0.0
-
+- '2.3.0'
+- '2.2.4'
 gemfile:
-  - gemfiles/rails_3_2.gemfile
-  - gemfiles/rails_4_0.gemfile
-  - gemfiles/rails_4_1.gemfile
-
+- gemfiles/rails_4_2.gemfile
+- gemfiles/rails_5_0.gemfile
+- Gemfile
 notifications:
-  email:
-    - fnando.vieira@gmail.com
+  email: false
+env:
+  global:
+    secure: vOCWAt9QPpbVRH8M2xowCnu31av1kqjB20nlg24aNrf7rWccNi0Il6KpiiCXkCHeJfFBNGHxBcWehZy0If2FiJEjFv/3IhkxzyMRTB+PkOK3i+PEwdVXawdDhkaBnRFqrslxsb1rcfOlIvVVnqnHEMTYEd+Twpd0d4G7idcv4NQ=
